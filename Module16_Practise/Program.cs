@@ -9,18 +9,29 @@ class Program
 {
     static void Main()
     {
+
+
+        
         Console.WriteLine("Welcome to the directory watcher!");
+
+        
         Console.WriteLine("Press 'Q' to quit the application.");
 
         string directoryPath = GetUserInput("Enter the path to the directory to watch: ");
         string logFilePath = GetUserInput("Enter the path to the log file: ");
 
+
+        
         try
         {
             using (FileSystemWatcher watcher = new FileSystemWatcher(directoryPath))
             {
+
+                
                 watcher.IncludeSubdirectories = true;
                 watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+
+                
                 watcher.Created += OnChanged;
                 watcher.Deleted += OnChanged;
                 watcher.Renamed += OnRenamed;
@@ -38,6 +49,9 @@ class Program
         }
     }
 
+
+
+    
     static void OnChanged(object sender, FileSystemEventArgs e)
     {
         LogChange($"[{DateTime.Now}] {e.ChangeType}: {e.FullPath}");
@@ -48,6 +62,8 @@ class Program
         LogChange($"[{DateTime.Now}] {e.ChangeType}: {e.OldFullPath} renamed to {e.FullPath}");
     }
 
+
+    
     static void LogChange(string logMessage)
     {
         string logFilePath = "changes.log";
